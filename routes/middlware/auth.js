@@ -1,19 +1,19 @@
 const
-  jwt = require('jsonwebtoken'),
-  SECRET_KEY_JWT = process.env.SECRET_KEY_JWT,
+  JwtHelper = require('libs/JwtHelper'),
   createErrors = require('http-errors'),
   { SECTION } = require('../../constants');
 
 function requireLogin(req, res, next) {
   const token = req.header('Authorization') || (req.query.token ? `Bearer ${req.query.token}` : null);
   if (token.split(' ')[0] === 'Bearer') {
-    jwt.verify(token.split(' ')[1], SECRET_KEY_JWT, function (err, decode) {
-      if (err) next(createErrors(401, "Forbidden"));
-      else {
+    JwtHelper.verifyAccessToken(token.split(' ')[1])
+      .then(decode => {
         req.user = decode;
         next();
-      }
-    });
+      })
+      .catch(err => {
+        next(createErrors(401, "Forbidden"))
+      })
   }
   else next(createErrors(401, "Forbidden"))
 }
