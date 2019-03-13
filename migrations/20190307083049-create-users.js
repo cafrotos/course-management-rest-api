@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      username: {
+      email: {
         type: Sequelize.STRING,
       },
       password: {
@@ -23,9 +23,6 @@ module.exports = {
       avatar: {
         type: Sequelize.TEXT,
       },
-      email: {
-        type: Sequelize.STRING,
-      },
       address: {
         type: Sequelize.STRING
       },
@@ -34,10 +31,6 @@ module.exports = {
       },
       is_logged: {
         type: Sequelize.BOOLEAN
-      },
-      token_exprired_at: {
-        allowNull: false,
-        type: Sequelize.DATE
       },
       createdAt: {
         allowNull: false,
