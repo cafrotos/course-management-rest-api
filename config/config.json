@@ -14,11 +14,6 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "afvkwjyaiznfmv",
-    "password": "a98c165fa7e25d8226aece7dbfc84b259f08a2bafc397e5021c54c3b72a8da78",
-    "database": "demdgm5r1evmhd",
-    "host": "ec2-50-17-227-28.compute-1.amazonaws.com",
-    "dialect": "postgres",
-    "port": 5432
+    "use_env_variable": "DATABASE_URL"
   }
 }
