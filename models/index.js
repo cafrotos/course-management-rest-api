@@ -6,19 +6,13 @@ const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
-const DB_URL = process.env.DATABASE_URL;
 const db = {};
 
 let sequelize;
-if (DB_URL) {
-  sequelize = new Sequelize(DB_URL)
-}
-else {
-  if (config.use_env_variable) {
-    sequelize = new Sequelize(process.env[config.use_env_variable], config);
-  } else {
-    sequelize = new Sequelize(config.database, config.username, config.password, config);
-  }
+if (config.use_env_variable) {
+  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+} else {
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
 fs
