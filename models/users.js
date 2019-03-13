@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     is_logged: DataTypes.BOOLEAN
   }, {});
   users.associate = function (models) {
-    // associations can be defined here
+    users.belongsToMany(models.classes, {through: 'users_classes'})
   };
   users.prototype.toJSON = function () {
     let { email, first_name, last_name, avatar, address, section } = this.dataValues;

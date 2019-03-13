@@ -3,7 +3,6 @@ module.exports = (sequelize, DataTypes) => {
   const classes = sequelize.define('classes', {
     class_name: DataTypes.STRING,
     create_by: DataTypes.INTEGER,
-    lecturer: DataTypes.INTEGER,
     description: DataTypes.STRING,
     room: DataTypes.STRING,
     module_id: DataTypes.INTEGER,
@@ -17,7 +16,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {});
   classes.associate = function(models) {
-    // associations can be defined here
+    classes.belongsTo(models.modules, {foreignKey: "module_id"})
+    classes.belongsToMany(models.users, {through: "users_classes"})
   };
   return classes;
 };

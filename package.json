@@ -18,6 +18,7 @@
     "mysql2": "^1.6.5",
     "sequelize": "^4.43.0",
     "services": "file:services",
-    "libs": "file:libs"
+    "libs": "file:libs",
+    "models": "file:models"
   }
 }

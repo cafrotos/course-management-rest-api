@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     credit: DataTypes.INTEGER
   }, {});
   modules.associate = function(models) {
-    // associations can be defined here
+    modules.hasMany(models.classes)
   };
   return modules;
 };
