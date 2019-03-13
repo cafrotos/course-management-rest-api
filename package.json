@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "npm install -g sequelize-cli && sequelize db:migrate && node ./bin/www"
+    "start": "node ./bin/www",
+    "migratedb": "sequelize db:migrate"
   },
   "dependencies": {
     "bcrypt": "^3.0.4",
