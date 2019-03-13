@@ -1,5 +1,5 @@
 'use strict';
-const bcrypt = require('bcrypt')
+const BcryptHelper = require('libs/BcryptHelper')
 
 module.exports = (sequelize, DataTypes) => {
   const users = sequelize.define('users', {
@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
   users.prototype.comparePassword = function(password) {
     let result;
     try {
-      result = bcrypt.compareSync(password, this.dataValues.password);
+      result = BcryptHelper.comparePassword(password, this.dataValues.password);
     } catch (error) {
       console.log(error);
       result = false;
