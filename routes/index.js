@@ -4,7 +4,7 @@ const
 
 router.all('/', requireLogin);
 router.get('/', decentralization(), (req, res, next) => {
-  res.json(req.user)
+  res.json("oke")
 })
 
 module.exports = router;

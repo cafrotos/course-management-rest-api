@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {});
   users.associate = function (models) {
-    // associations can be defined here
+    users.belongsToMany(models.classes, {through: 'users_classes'})
   };
   users.prototype.toJSON = function () {
     let { email, firstName, lastName, avatar, address, section } = this.dataValues;
