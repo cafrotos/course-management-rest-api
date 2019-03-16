@@ -14,10 +14,10 @@ module.exports = {
       password: {
         type: Sequelize.STRING
       },
-      first_name: {
+      firstName: {
         type: Sequelize.STRING
       },
-      last_name: {
+      lastName: {
         type: Sequelize.STRING
       },
       avatar: {
@@ -29,7 +29,7 @@ module.exports = {
       section: {
         type: Sequelize.STRING
       },
-      is_logged: {
+      isLogged: {
         type: Sequelize.BOOLEAN
       },
       createdAt: {
