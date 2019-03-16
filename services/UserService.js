@@ -18,7 +18,7 @@ const loginUser = async ({ email, password }) => {
   user = await users.findOne({ where: { email } });
   if (!user || !user.comparePassword(password)) throw createErrors(400, "Email or password incorect");
   userInfo = user.toJSON();
-  access_token = JwtHelper.createAccessToken({ email, section: userInfo.section })
+  access_token = JwtHelper.createAccessToken({ id: userInfo.id, email, section: userInfo.section })
   return { ...userInfo, access_token }
 }
 
