@@ -1,12 +1,12 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const classes = sequelize.define('classes', {
-    class_name: DataTypes.STRING,
-    class_code: DataTypes.STRING,
-    create_by: DataTypes.INTEGER,
+    className: DataTypes.STRING,
+    classCode: DataTypes.STRING,
+    createBy: DataTypes.INTEGER,
     description: DataTypes.STRING,
     room: DataTypes.STRING,
-    module_id: DataTypes.INTEGER,
+    moduleId: DataTypes.INTEGER,
     roles: {
       type: DataTypes.JSON,
       allowNull: false,
@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {});
   classes.associate = function(models) {
-    classes.belongsTo(models.modules, {foreignKey: "module_id"})
+    classes.belongsTo(models.modules, {foreignKey: "moduleId"})
     classes.belongsToMany(models.users, {through: "users_classes"})
   };
   return classes;

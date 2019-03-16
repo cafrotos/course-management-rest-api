@@ -8,13 +8,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      user_id: {
+      userId: {
         type: Sequelize.INTEGER
       },
-      class_id: {
+      classId: {
         type: Sequelize.INTEGER
       },
-      exercises_number: {
+      exercisesNumber: {
         type: Sequelize.SMALLINT
       },
       gpa: {

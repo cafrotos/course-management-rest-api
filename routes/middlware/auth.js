@@ -5,7 +5,7 @@ const
 
 function requireLogin(req, res, next) {
   const token = req.header('Authorization') || (req.query.token ? `Bearer ${req.query.token}` : null);
-  if (token.split(' ')[0] === 'Bearer') {
+  if (token && token.split(' ')[0] === 'Bearer') {
     JwtHelper.verifyAccessToken(token.split(' ')[1])
       .then(decode => {
         req.user = decode;

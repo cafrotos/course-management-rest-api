@@ -8,13 +8,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      class_name: {
+      className: {
         type: Sequelize.STRING
       },
-      class_code: {
+      classCode: {
         type: Sequelize.STRING
       },
-      create_by: {
+      createBy: {
         type: Sequelize.INTEGER
       },
       description: {
@@ -23,7 +23,7 @@ module.exports = {
       room: {
         type: Sequelize.STRING
       },
-      module_id: {
+      moduleId: {
         type: Sequelize.INTEGER
       },
       roles: {
