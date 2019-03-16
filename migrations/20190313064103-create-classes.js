@@ -11,6 +11,9 @@ module.exports = {
       class_name: {
         type: Sequelize.STRING
       },
+      class_code: {
+        type: Sequelize.STRING
+      },
       create_by: {
         type: Sequelize.INTEGER
       },

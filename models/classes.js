@@ -2,6 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   const classes = sequelize.define('classes', {
     class_name: DataTypes.STRING,
+    class_code: DataTypes.STRING,
     create_by: DataTypes.INTEGER,
     description: DataTypes.STRING,
     room: DataTypes.STRING,
