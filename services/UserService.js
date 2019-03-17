@@ -18,11 +18,30 @@ const loginUser = async ({ email, password }) => {
   user = await users.findOne({ where: { email } });
   if (!user || !user.comparePassword(password)) throw createErrors(400, "Email or password incorect");
   userInfo = user.toJSON();
-  access_token = JwtHelper.createAccessToken({ email, section: userInfo.section })
+  access_token = JwtHelper.createAccessToken({ id: userInfo.id, email, section: userInfo.section })
   return { ...userInfo, access_token }
+}
+
+const getUserInfo = async (user) => {
+  let userInfo = await users.findById(user.id);
+  if (!userInfo) throw createErrors(404, "Not Found")
+  return userInfo.toJSON();
+}
+
+const updateUserInfo = async (user, dataUpdate) => {
+  let userInfo = {
+    email: dataUpdate.email,
+    firstName: dataUpdate.firstName,
+    lastName: dataUpdate.lastName,
+    avatar: dataUpdate.avatar,
+    address: dataUpdate.address,
+  }
+  return await users.update( userInfo, { where: { id: user.id } })
 }
 
 module.exports = {
   registerUser,
-  loginUser
+  loginUser,
+  getUserInfo,
+  updateUserInfo
 }
