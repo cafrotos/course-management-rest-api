@@ -4,7 +4,7 @@ const
   userRouter = require('./users');
 
 router.use('/users', requireLogin, userRouter())
-router.get('/', decentralization(), (req, res, next) => {
+router.get('/', requireLogin, decentralization(), (req, res, next) => {
   res.json(req.user)
 })
 

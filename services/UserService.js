@@ -29,6 +29,8 @@ const getUserInfo = async (user) => {
 }
 
 const updateUserInfo = async (user, dataUpdate) => {
+  let countUserEmail = user.findOne({where: {email: dataUpdate.email}})
+  if(countUserEmail) throw createErrors(400, "This email has been taken!")
   let userInfo = {
     email: dataUpdate.email,
     firstName: dataUpdate.firstName,
@@ -36,6 +38,7 @@ const updateUserInfo = async (user, dataUpdate) => {
     avatar: dataUpdate.avatar,
     address: dataUpdate.address,
   }
+   
   return await users.update( userInfo, { where: { id: user.id } })
 }
 

@@ -24,8 +24,8 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
   };
   users.prototype.toJSON = function () {
-    let { email, firstName, lastName, avatar, address, section } = this.dataValues;
-    return { email, firstName, lastName, avatar, address, section }
+    let {id, email, firstName, lastName, avatar, address, section } = this.dataValues;
+    return {id, email, firstName, lastName, avatar, address, section }
   }
   users.prototype.comparePassword = function (password) {
     let result;

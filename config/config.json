@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "Bemyself",
+    "password": "01021999hanh",
     "database": "courses-management",
     "host": "127.0.0.1",
     "dialect": "mysql"
