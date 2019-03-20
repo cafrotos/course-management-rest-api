@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   users.associate = function (models) {
     users.belongsToMany(models.classes, { through: 'students_classes' })
-    users.hasMany(models.classes, { foreignKey: 'lecturerId', as: 'classes' })
+    users.hasMany(models.classes, { foreignKey: 'lecturerId' })
   };
   users.prototype.toJSON = function () {
     let { email, firstName, lastName, avatar, address, section } = this.dataValues;

@@ -9,7 +9,7 @@ const
  * @param {*} query 
  * @param {*} option 
  */
-async function getClassInfoOfUser(user, query, option) {
+async function getClassesInfoOfUser(user, query, option) {
   switch (user.section) {
     case SECTION.LECTURER_CODE:
       return await getClassOfLecturer(user.id, query, option);
@@ -55,7 +55,10 @@ async function createNewClass(lecturer, classInfo, option) {
   return users.create(classEntity);
 }
 
+async function getClassDetailInfo(user, classCode) {
+  
+}
 module.exports = {
-  getClassInfoOfUser,
+  getClassesInfoOfUser,
   createNewClass
 }

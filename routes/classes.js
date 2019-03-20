@@ -23,7 +23,7 @@ module.exports = () => {
 
 var getAllClass = (req, res, next) => {
   let query = QueryHelper.queryParser(req.query);
-  ClassService.getClassInfoOfUser(req.user, query)
+  ClassService.getClassesInfoOfUser(req.user, query)
     .then(classes => {
       res.status(200).json(classes)
     })
