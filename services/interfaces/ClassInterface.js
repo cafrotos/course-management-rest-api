@@ -1,5 +1,4 @@
 const crypto = require('crypto');
-const
 
 class ClassInterface {
   constructor(info) {
@@ -16,7 +15,7 @@ class ClassInterface {
 
   getClassesEntityToCreate() {
     let failures = this.validateClassesEntity()
-    if (failures) throw failures;
+    if (Object.getOwnPropertyNames(failures).length > 0) throw failures;
     this.classCode = this.genClassCode();
     return {
       className: this.className,
