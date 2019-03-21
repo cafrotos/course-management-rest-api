@@ -13,7 +13,7 @@ async function getClassInfoOfUser(user, query, option) {
   switch (user.section) {
     case SECTION.LECTURER_CODE:
       return await getClassOfLecturer(user.id, query, option);
-    case SECTION.STUDENT: 
+    case SECTION.STUDENT_CODE: 
       return await getClassOfStudent(user.id, query, option)
     default:
       break;
