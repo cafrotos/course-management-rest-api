@@ -11,6 +11,7 @@ const queryParser = (query) => {
   if (query['where']) {
     query['where'] = JSON.parse(query.where)
   }
+  else query['where'] = {}
 
   if (query['attributes']) {
     query['attributes'] = JSON.parse(query.attributes)

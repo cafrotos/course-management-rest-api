@@ -9,7 +9,7 @@ const
  * @param {*} query 
  * @param {*} option 
  */
-async function getClassInfoOfUser(user, query, option) {
+async function getClassesInfoOfUser(user, query, option) {
   switch (user.section) {
     case SECTION.LECTURER_CODE:
       return await getClassOfLecturer(user.id, query, option);
@@ -22,13 +22,8 @@ async function getClassInfoOfUser(user, query, option) {
 
 async function getClassOfLecturer(lecturerId, query, option) {
   let queryFilterClasses = query ? query : {};
-  let queryFindLecturerClassInfo = {
-    where: { id: lecturerId },
-    include: [
-      { model: classes, require: true, as: "classes", where: queryFilterClasses }
-    ]
-  }
-  return await users.findOne(queryFindLecturerClassInfo);
+  queryFilterClasses.where.lecturerId = lecturerId;
+  return await classes.findAll(queryFilterClasses);
 }
 
 async function getClassOfStudent(studentId, query, option) {
@@ -37,9 +32,7 @@ async function getClassOfStudent(studentId, query, option) {
     where: { id: studentId }
   }
   let user = await users.findOne(queryFindStudentInfo);
-  let classInfo = user.getClasses(queryFilterClasses);
-  user.dataValues.classes = classInfo;
-  return user;
+  return await user.getClasses(queryFilterClasses);
 }
 // end
 
@@ -52,10 +45,13 @@ async function getClassOfStudent(studentId, query, option) {
 async function createNewClass(lecturer, classInfo, option) {
   let classInterface = new ClassInterface({...classInfo, lecturerId: lecturer.id});
   let classEntity = classInterface.getClassesEntityToCreate();
-  return users.create(classEntity);
+  return classes.create(classEntity);
 }
 
+async function getClassDetailInfo(user, classCode) {
+
+}
 module.exports = {
-  getClassInfoOfUser,
+  getClassesInfoOfUser,
   createNewClass
 }
