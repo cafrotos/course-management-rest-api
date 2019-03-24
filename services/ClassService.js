@@ -61,13 +61,13 @@ async function getClassDetailInfo(user, classCode) {
 
 /**
  * Lecturer sẽ dùng api này để them danh sách sinh viên vào lớp
- * @param {*} classCode 
+ * @param {*} id 
  * @param {*} emails 
  */
-async function addNewStudentToClassByEmails(user, classCode, emails) {
+async function addNewStudentToClassByEmails(user, id, emails) {
   if (!Array.isArray(emails)) throw CreateError(400, "Emails must be array!");
   let result = await Promise.all([
-    classes.findOne({ where: { classCode, lecturerId: user.id } }),
+    classes.findOne({ where: { id, lecturerId: user.id } }),
     users.findAll({ where: { email: { [Op.or]: emails } } })
   ])
   let classInfo = result[0];
@@ -77,12 +77,20 @@ async function addNewStudentToClassByEmails(user, classCode, emails) {
 }
 
 
-async function enrolClassByClassCode(user, classCode) {
-  
+async function enrolClassByClassCode(user, id) {
+  let result = await Promise.all([
+    classes.findOne({ where: { id } }),
+    users.findOne({ where: { id: user.id } })
+  ])
+  let classInfo = result[0];
+  let userInfo = result[1];
+  if (!classInfo) throw CreateError(404, "Can't not found class!");
+  return await classInfo.addUsers(userInfo)
 }
 
 module.exports = {
   getClassesInfoOfUser,
   createNewClass,
-  addNewStudentToClassByEmails
+  addNewStudentToClassByEmails,
+  enrolClassByClassCode
 }
