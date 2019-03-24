@@ -6,15 +6,12 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       className: {
         type: Sequelize.STRING
       },
-      classCode: {
-        type: Sequelize.STRING
-      },
-      createBy: {
+      lecturerId: {
         type: Sequelize.INTEGER
       },
       description: {
