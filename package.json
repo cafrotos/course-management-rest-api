@@ -16,12 +16,13 @@
     "jade": "~1.11.0",
     "jsonwebtoken": "^8.5.0",
     "libs": "file:libs",
+    "models": "file:models",
     "morgan": "^1.9.1",
     "mysql2": "^1.6.5",
     "pg": "^7.8.2",
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.43.0",
-    "services": "file:services",
-    "models": "file:models"
+    "sequelize-cli": "^5.4.0",
+    "services": "file:services"
   }
 }
