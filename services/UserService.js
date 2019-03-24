@@ -22,7 +22,29 @@ const loginUser = async ({ email, password }) => {
   return { ...userInfo, access_token }
 }
 
+const getUserInfo = async (user) => {
+  let userInfo = await users.findById(user.id);
+  if (!userInfo) throw createErrors(404, "Not Found")
+  return userInfo.toJSON();
+}
+
+const updateUserInfo = async (user, dataUpdate) => {
+  let countUserEmail = user.findOne({where: {email: dataUpdate.email}})
+  if(countUserEmail) throw createErrors(400, "This email has been taken!")
+  let userInfo = {
+    email: dataUpdate.email,
+    firstName: dataUpdate.firstName,
+    lastName: dataUpdate.lastName,
+    avatar: dataUpdate.avatar,
+    address: dataUpdate.address,
+  }
+   
+  return await users.update( userInfo, { where: { id: user.id } })
+}
+
 module.exports = {
   registerUser,
-  loginUser
+  loginUser,
+  getUserInfo,
+  updateUserInfo
 }
