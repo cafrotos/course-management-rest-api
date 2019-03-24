@@ -4,7 +4,7 @@ class ClassInterface {
   constructor(info) {
     if (!info) info = {};
     this.className = info.className;
-    this.classCode = info.classCode;
+    this.id = info.id;
     this.lecturerId = info.lecturerId;
     this.studentNumber = info.studentNumber;
     this.description = info.description;
@@ -16,10 +16,10 @@ class ClassInterface {
   getClassesEntityToCreate() {
     let failures = this.validateClassesEntity()
     if (Object.getOwnPropertyNames(failures).length > 0) throw failures;
-    this.classCode = this.genClassCode();
+    this.id = this.genClassCode();
     return {
       className: this.className,
-      classCode: this.classCode,
+      id: this.id,
       lecturerId: this.lecturerId,
       description: this.description,
       room: this.room,
