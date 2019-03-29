@@ -1,0 +1,6 @@
+{
+  "google": {
+    "scope": "https://www.googleapis.com/auth/drive",
+    "rootFolder": "/"
+  }
+}
