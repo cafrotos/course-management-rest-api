@@ -1,6 +1,8 @@
 {
   "google": {
-    "scope": "https://www.googleapis.com/auth/drive",
-    "rootFolder": "/"
+    "scope": [
+      "https://www.googleapis.com/auth/drive"
+    ],
+    "rootFolderId": "1NFXT25B-ntmkPKujq0k6OebLfdyU_55r"
   }
 }

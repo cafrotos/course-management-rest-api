@@ -7,6 +7,12 @@ const SECTION = {
   ADMIN: 100
 }
 
+const GOOGLE_SERVICE = {
+  DRIVE: "DRIVE",
+  GMAIL: "GMAIL"
+}
+
 module.exports = {
-  SECTION
+  SECTION,
+  GOOGLE_SERVICE
 }
