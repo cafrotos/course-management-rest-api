@@ -5,8 +5,8 @@ module.exports = (sequelize, DataTypes) => {
   const users = sequelize.define('users', {
     email: DataTypes.STRING,
     password: DataTypes.STRING,
-    first_name: DataTypes.STRING,
-    last_name: DataTypes.STRING,
+    firstName: DataTypes.STRING,
+    lastName: DataTypes.STRING,
     avatar: {
       type: DataTypes.TEXT,
       allowNull: false,
@@ -14,16 +14,20 @@ module.exports = (sequelize, DataTypes) => {
     },
     address: DataTypes.STRING,
     section: DataTypes.STRING,
-    is_logged: DataTypes.BOOLEAN
+    isLogged: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    }
   }, {});
   users.associate = function (models) {
-    // associations can be defined here
+    users.belongsToMany(models.classes, {through: 'users_classes'})
   };
   users.prototype.toJSON = function () {
-    let { email, first_name, last_name, avatar, address, section } = this.dataValues;
-    return { email, first_name, last_name, avatar, address, section }
+    let { email, firstName, lastName, avatar, address, section } = this.dataValues;
+    return { email, firstName, lastName, avatar, address, section }
   }
-  users.prototype.comparePassword = function(password) {
+  users.prototype.comparePassword = function (password) {
     let result;
     try {
       result = BcryptHelper.comparePassword(password, this.dataValues.password);
