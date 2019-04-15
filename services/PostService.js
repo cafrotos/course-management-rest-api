@@ -2,21 +2,41 @@ const
   JwtHelper = require('libs/JwtHelper'),
   createErrors = require('http-errors'),
   BcryptHelper = require('libs/BcryptHelper'),
-  { posts } = require('../models');
+  AttachmentsService = require('./AttachmentsService'),
+  PostsInterface = require('./interfaces/PostsInterface'),
+  { posts, sequelize } = require('../models');
 
-const postUser = async (postUser) => {
-  let { classId, postBy, content, attachmentId } = postUser;
-  if(!classId || !postBy || !content) throw createErrors(400, "Not enough content");
-  return await posts.create({ ...postUser});
+const createNewPost = async (user, classInfo, { postInfo, files }) => {
+  let transaction = await sequelize.transaction();
+  let postInterface = new PostsInterface(classInfo);
+  let postEntity = postInterface.getEntity();
+  let result, postModel;
+
+  try {
+    result = await Promise.all([
+      posts.create(postEntity, { transaction }),
+      AttachmentsService.saveAttachment(files, postEntity.attachmentBatchId, { transaction })
+    ])
+    if (!result) throw createErrors(500, "Data error")
+  } catch (error) {
+    transaction.rollback();
+    throw error;
+  }
+
+  transaction.commit();
+
+  postModel = result[0];
+  postModel.attachments = result[1];
+  return postModel;
 }
 
-const getUserpost = async () => {
+const getClassPosts = async () => {
   let userPost = await posts.findAll();
   if (!userPost) throw createErrors(404, "Not Found")
   return userPost;
 }
 
 module.exports = {
-  postUser,
-  getUserpost
+  createNewPost,
+  getClassPosts
 };

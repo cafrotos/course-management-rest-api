@@ -1,7 +1,7 @@
 const
   router = require('express').Router(),
   { SECTION } = require('../constants'),
-  { decentralization } = require('./middlware/authentication'),
+  { decentralization, classPermistion } = require('./middlware/authentication'),
   ClassService = require('services/ClassService'),
   QueryHelper = require('libs/QueryHelper');
 
@@ -14,9 +14,9 @@ module.exports = () => {
     .post(decentralization(), enrolToClassByClassCode)
 
   router.route('/:id')
-    .get(decentralization(), getClassInfoById)
-    .post(decentralization(SECTION.LECTURER_CODE), addNewStudent)
-    .patch(decentralization(SECTION.LECTURER_CODE), updateClassInfoById)
+    .get(decentralization(), classPermistion, getClassInfoById)
+    .post(decentralization(SECTION.LECTURER_CODE), classPermistion, addNewStudent)
+    .patch(decentralization(SECTION.LECTURER_CODE), classPermistion, updateClassInfoById)
 
   return router;
 }

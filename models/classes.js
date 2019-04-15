@@ -24,10 +24,11 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   }, {});
-  classes.associate = function(models) {
-    classes.belongsTo(models.modules, {foreignKey: "moduleId"})
-    classes.belongsTo(models.users, {foreignKey: 'lecturerId', as: 'lecturer'})
-    classes.belongsToMany(models.users, {through: "students_classes"})
+  classes.associate = function (models) {
+    classes.belongsTo(models.modules, { foreignKey: "moduleId" })
+    classes.belongsTo(models.users, { foreignKey: 'lecturerId', as: 'lecturer' })
+    classes.belongsToMany(models.users, { through: "students_classes" })
+    classes.belongsToMany(models.users, { through: "posts", sourceKey: "id", targetKey: "classId" })
   };
   return classes;
 };

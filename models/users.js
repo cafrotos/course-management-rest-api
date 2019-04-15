@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   users.associate = function (models) {
     users.belongsToMany(models.classes, { through: 'students_classes' })
+    users.belongsToMany(models.classes, { through: 'posts', sourceKey: 'id', targetKey: 'postBy' })
     users.hasMany(models.classes, { foreignKey: 'lecturerId' })
   };
   users.prototype.toJSON = function () {

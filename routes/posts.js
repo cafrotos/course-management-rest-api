@@ -1,30 +1,35 @@
 const
   PostSevice = require('services/PostService'),
-  { decentralization } = require('./middlware/authentication'),
+  AttachmentsService = require('services/AttachmentsService'),
+  { decentralization, classPermistion } = require('./middlware/authentication'),
   router = require('express').Router()
 
 module.exports = () => {
-  router.route('/status')
-    .post(decentralization(), postUserStatus)
-    .get(decentralization(), getUserStatus)
+  router.route('/')
+    .post(decentralization(), classPermistion, AttachmentsService.upload.array('files', 4), createNewPost)
+    .get(decentralization(), classPermistion, getClassPosts)
   return router;
 }
 
-var postUserStatus = (req, res, next) => {
-  PostSevice.postUser(req.body)
-  .then(post => {
-    res.json(post)
-  })
-  .then(err => {
-    res(err)
-    next();
-  })
+var createNewPost = (req, res, next) => {
+  let data = {
+    postInfo: req.body,
+    files: req.files
+  }
+  PostSevice.createNewPost(req.user, req.classInfo, data)
+    .then(post => {
+      res.json(post)
+    })
+    .then(err => {
+      res(err)
+      next();
+    })
 };
 
-var getUserStatus = (req, res, next) => {
-  PostSevice.getUserpost()
-    .then(userPost => {
-      res.status(200).json(userPost);
+var getClassPosts = (req, res, next) => {
+  PostSevice.getClassPosts(req.classInfo)
+    .then(posts => {
+      res.status(200).json(posts);
     })
     .catch(err => {
       next(err)
