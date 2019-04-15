@@ -20,8 +20,8 @@ const upload = multer({
   })
 })
 
-const saveAttachment = (files, batchId, options) => {
-  if(!batchId || !files || !Array.isArray(files)) throw new CreateError(500, "Data error!");
+const saveAttachment = async (files, batchId, options) => {
+  if (!batchId || !files || !Array.isArray(files)) throw new CreateError(500, "Data error!");
   let transaction = options.transaction ? options.transaction : null;
   let attachmentModels = [];
   files.map(file => {
@@ -30,9 +30,21 @@ const saveAttachment = (files, batchId, options) => {
       batchId: batchId,
       driveId: file.fileId
     }
+    attachmentModels.push(attachment);
   })
+  return await attachments.bulkCreate(attachmentModels, { transaction });
+}
+
+const dowloadAttachment = async (fileId) => {
+  if(!fileId) throw new CreateError(400, "fileIs is undefined")
+  return await drive.files.get(
+    { fileId, alt: 'media' },
+    {responseType: 'stream'}
+  )
 }
 
 module.exports = {
-  upload
+  upload,
+  dowloadAttachment,
+  saveAttachment
 }
