@@ -23,7 +23,7 @@ async function getClassesInfoOfUser(user, query, option) {
 }
 
 async function getClassOfLecturer(lecturerId, query, option) {
-  let queryFilterClasses = query ? query : {};
+  let queryFilterClasses = query ? query : { where: {}};
   queryFilterClasses.where.lecturerId = lecturerId;
   return await classes.findAll(queryFilterClasses);
 }
