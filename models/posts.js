@@ -1,13 +1,24 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const posts = sequelize.define('posts', {
-    classId: DataTypes.STRING,
-    postBy: DataTypes.INTEGER,
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false
+    },
+    classId: {
+      type: DataTypes.STRING
+    },
+    postBy: {
+      type: DataTypes.INTEGER
+    },
+    attachmentBatchId: {
+      type: DataTypes.STRING,
+    },
     content: DataTypes.STRING,
-    attachmentBatchId: DataTypes.STRING
   }, {});
   posts.associate = function (models) {
-    posts.hasMany(models.attachments, { foreignKey: 'batchId' })
   };
   return posts;
 };

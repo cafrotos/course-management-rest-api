@@ -3,14 +3,17 @@ const crypto = require('crypto');
 class PostsInterface {
   constructor(data) {
     if (data && typeof data === 'object') {
-      Object.assign(this, data);
+      this.classId = data.classInfo.id;
+      this.content = data.postInfo.content;
+      this.postBy = data.user.id;
+      this.hasAttachment = data.files.length ? true : false;
     }
   }
 
   getEntity() {
     let failures = this.validate();
     if (Object.getOwnPropertyNames(failures).length > 0) throw failures;
-    this.attachmentBatchId = this.genBatchId();
+    this.attachmentBatchId = this.hasAttachment ? this.genBatchId() : null;
     return {
       classId: this.classId,
       postBy: this.postBy,

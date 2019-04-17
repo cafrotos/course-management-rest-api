@@ -8,14 +8,15 @@ const
 
 const createNewPost = async (user, classInfo, { postInfo, files }) => {
   let transaction = await sequelize.transaction();
-  let postInterface = new PostsInterface(classInfo);
-  let postEntity = postInterface.getEntity();
+  let postInterface = new PostsInterface({postInfo, classInfo: classInfo.dataValues, user, files});
+  let postEntity
   let result, postModel;
 
   try {
+    postEntity = postInterface.getEntity();
     result = await Promise.all([
       posts.create(postEntity, { transaction }),
-      AttachmentsService.saveAttachment(files, postEntity.attachmentBatchId, { transaction })
+      AttachmentsService.saveAttachment(files, postEntity.attachmentBatchId, { transaction, hasAttachment: postInterface.hasAttachment })
     ])
     if (!result) throw createErrors(500, "Data error")
   } catch (error) {
@@ -26,7 +27,7 @@ const createNewPost = async (user, classInfo, { postInfo, files }) => {
   transaction.commit();
 
   postModel = result[0];
-  postModel.attachments = result[1];
+  postModel.dataValues.attachments = result[1];
   return postModel;
 }
 

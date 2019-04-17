@@ -1,9 +1,9 @@
 'use strict';
 
 module.exports = {
-  up: (queryInterface, Sequelize) => {
+  up: async (queryInterface, Sequelize) => {
     let date = new Date();
-    return queryInterface.bulkInsert('modules', [
+    return await queryInterface.bulkInsert('modules', [
       { moduleName: 'Toán', credit: 3, createdAt: date, updatedAt: date },
       { moduleName: 'Vật lý', credit: 3, createdAt: date, updatedAt: date },
       { moduleName: 'Hóa học', credit: 3, createdAt: date, updatedAt: date },

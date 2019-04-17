@@ -6,8 +6,8 @@ const
   CreateErrors = require('libs/CreateErrors');
 
 module.exports = () => {
-  router.route('/dowload/:fileId')
-    .get(decentralization(), dowloadFile)
+  router.route('/download/:fileId')
+    .get(dowloadFile)
   return router;
 }
 

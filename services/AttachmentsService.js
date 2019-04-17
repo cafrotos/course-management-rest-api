@@ -21,6 +21,7 @@ const upload = multer({
 })
 
 const saveAttachment = async (files, batchId, options) => {
+  if(!options.hasAttachment) return null;
   if (!batchId || !files || !Array.isArray(files)) throw new CreateError(500, "Data error!");
   let transaction = options.transaction ? options.transaction : null;
   let attachmentModels = [];

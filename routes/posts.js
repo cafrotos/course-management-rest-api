@@ -5,7 +5,7 @@ const
   router = require('express').Router()
 
 module.exports = () => {
-  router.route('/')
+  router.route('/:id')
     .post(decentralization(), classPermistion, AttachmentsService.upload.array('files', 4), createNewPost)
     .get(decentralization(), classPermistion, getClassPosts)
   return router;
@@ -20,9 +20,8 @@ var createNewPost = (req, res, next) => {
     .then(post => {
       res.json(post)
     })
-    .then(err => {
-      res(err)
-      next();
+    .catch(err => {
+      next(err);
     })
 };
 
