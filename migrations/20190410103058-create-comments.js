@@ -1,31 +1,21 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('classes', {
+    return queryInterface.createTable('comments', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.STRING
-      },
-      className: {
-        type: Sequelize.STRING
-      },
-      lecturerId: {
         type: Sequelize.INTEGER
       },
-      description: {
-        type: Sequelize.STRING
-      },
-      room: {
-        type: Sequelize.STRING
-      },
-      moduleId: {
+      commentId: {
         type: Sequelize.INTEGER
       },
-      roles: {
-        type: Sequelize.JSON,
-        allowNull: false
+      postId: {
+        type: Sequelize.INTEGER
+      },
+      content: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -38,6 +28,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('classes');
+    return queryInterface.dropTable('comments');
   }
 };

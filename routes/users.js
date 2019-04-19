@@ -1,25 +1,33 @@
-const 
-  UserService = require('services/UserService'),
-  router = require('express').Router()
+const
+  router = require('express').Router(),
+  createErrors = require('http-errors'),
+  { decentralization } = require('./middlware/authentication'),
+  UserService = require('services/UserService');
 
-router.post('/register', (req, res, next) => {
-  UserService.registerUser(req.body)
-    .then(user => {
-      res.json(user.toJSON());
-    })
-    .catch(err => {
-      next(err);
-    })
-});
+module.exports = () => {
+  router.route('/info')
+    .get(decentralization(), getUserInfo)
+    .patch(decentralization(), patchUserInfo)
+  return router;
+}
 
-router.post('/login', (req, res, next) => {
-  UserService.loginUser(req.body)
+var getUserInfo = (req, res, next) => {
+  UserService.getUserInfo(req.user)
     .then(userInfo => {
-      res.json(userInfo);
+      res.status(200).json(userInfo);
     })
     .catch(err => {
-      next(err);
+      next(err)
     })
-});
+}
 
-module.exports = router;
+var patchUserInfo = (req, res, next) => {
+  let dataUpdate = req.body;
+  UserService.updateUserInfo(req.user, dataUpdate)
+    .then(userInfo => {
+      res.status(200).json(userInfo);
+    })
+    .catch(err => {
+      next(err)
+    })
+}

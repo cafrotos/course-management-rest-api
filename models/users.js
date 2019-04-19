@@ -21,11 +21,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {});
   users.associate = function (models) {
-    users.belongsToMany(models.classes, {through: 'users_classes'})
+    users.belongsToMany(models.classes, { through: 'students_classes' })
+    users.belongsToMany(models.classes, { through: { model: models.posts, unique: false }, foreignKey: 'postBy', unique: false })
+    users.hasMany(models.classes, { foreignKey: 'lecturerId' })
   };
   users.prototype.toJSON = function () {
-    let { email, firstName, lastName, avatar, address, section } = this.dataValues;
-    return { email, firstName, lastName, avatar, address, section }
+    let { id, email, firstName, lastName, avatar, address, section } = this.dataValues;
+    return { id, email, firstName, lastName, avatar, address, section }
   }
   users.prototype.comparePassword = function (password) {
     let result;

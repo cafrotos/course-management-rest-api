@@ -1,10 +1,18 @@
 const
   router = require('express').Router(),
-  {requireLogin, decentralization} = require('./middlware/auth');
+  classesRouter = require('./classes'),
+  { requireLogin, decentralization } = require('./middlware/authentication'),
+  userRouter = require('./users'),
+  postRouter = require('./posts'),
+  attachmentRouter = require('./attachments');
 
-router.all('/', requireLogin);
-router.get('/', decentralization(), (req, res, next) => {
-  res.json("oke")
+router.use('/users', requireLogin, userRouter())
+router.use('/attachments', attachmentRouter())
+router.get('/', requireLogin, decentralization(), (req, res, next) => {
+  res.json(req.user)
 })
+
+router.use('/classes', requireLogin, classesRouter());
+router.use('/posts', requireLogin, postRouter())
 
 module.exports = router;

@@ -6,12 +6,13 @@ var logger = require('morgan');
 var cors = require('cors')
 
 var indexRouter = require('./routes/index');
-var authRouter = require('./routes/users');
+var authRouter = require('./routes/authorization');
 
 var app = express();
 
 app.use(cors())
 app.use(logger('dev'));
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

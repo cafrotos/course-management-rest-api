@@ -1,4 +1,5 @@
 const
+  { classes, student_class } = require('models'),
   JwtHelper = require('libs/JwtHelper'),
   createErrors = require('http-errors'),
   { SECTION } = require('../../constants');
@@ -30,7 +31,36 @@ function decentralization(restriction_level) {
   })
 }
 
+async function classPermistion(req, res, next) {
+  let classId = req.params.id;
+  let user = req.user;
+  let classInfo
+  switch (user.section) {
+    case SECTION.LECTURER_CODE:
+      classInfo = await classes.findOne({ where: { id: classId, lecturerId: user.id } });
+      break;
+    case SECTION.STUDENT_CODE:
+      let relative = await student_class.findOne({
+        where: {
+          classId, userId: user.id
+        },
+        include: [
+          { model: classes, require: true, as: "classes" }
+        ]
+      })
+      if (relative) {
+        classInfo = relative.dataValues.classes;
+      }
+      break;
+    default: next(createErrors(403, "Permisson Denied"))
+  }
+  if (!classInfo) next(createErrors(403, "Permisson Denied"))
+  req.classInfo = classInfo;
+  next();
+}
+
 module.exports = {
   requireLogin,
-  decentralization
+  decentralization,
+  classPermistion
 };
