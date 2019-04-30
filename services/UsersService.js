@@ -2,7 +2,7 @@ const
   JwtHelper = require('libs/JwtHelper'),
   createErrors = require('http-errors'),
   BcryptHelper = require('libs/BcryptHelper'),
-  { users } = require('../models');
+  { users } = require('models');
 
 const registerUser = async (userInfo) => {
   let { email, password } = userInfo;

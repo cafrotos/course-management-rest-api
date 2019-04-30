@@ -1,12 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const posts = sequelize.define('posts', {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-      allowNull: false
-    },
     classId: {
       type: DataTypes.STRING
     },
@@ -19,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     content: DataTypes.STRING,
   }, {});
   posts.associate = function (models) {
+    posts.hasMany(models.attachments, { foreignKey: 'batchId', sourceKey: 'attachmentBatchId', constraints: false })
   };
   return posts;
 };

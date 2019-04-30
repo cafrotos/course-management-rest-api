@@ -2,7 +2,7 @@ const
   router = require('express').Router(),
   { SECTION } = require('../constants'),
   { decentralization, classPermistion } = require('./middlware/authentication'),
-  ClassService = require('services/ClassService'),
+  { ClassesService } = require('services'),
   QueryHelper = require('libs/QueryHelper');
 
 module.exports = () => {
@@ -23,7 +23,7 @@ module.exports = () => {
 
 var getAllClass = (req, res, next) => {
   let query = QueryHelper.queryParser(req.query);
-  ClassService.getClassesInfoOfUser(req.user, query)
+  ClassesService.getClassesInfoOfUser(req.user, query)
     .then(classes => {
       res.status(200).json(classes)
     })
@@ -33,7 +33,7 @@ var getAllClass = (req, res, next) => {
 }
 
 var createNewClass = (req, res, next) => {
-  ClassService.createNewClass(req.user, req.body)
+  ClassesService.createNewClass(req.user, req.body)
     .then(classInfo => {
       res.status(200).json(classInfo)
     })
@@ -43,7 +43,7 @@ var createNewClass = (req, res, next) => {
 }
 
 var getClassInfoById = (req, res, next) => {
-  ClassService.getClassInfoById(req.user, req.params.id)
+  ClassesService.getClassInfoById(req.user, req.params.id)
     .then(classInfo => {
       res.status(200).json(classInfo)
     })
@@ -54,7 +54,7 @@ var getClassInfoById = (req, res, next) => {
 
 var addNewStudent = (req, res, next) => {
   let { emails } = req.body
-  ClassService.addNewStudentToClassByEmails(req.user, req.params.id, emails)
+  ClassesService.addNewStudentToClassByEmails(req.user, req.params.id, emails)
     .then(result => {
       res.status(200).json(result)
     })
@@ -65,7 +65,7 @@ var addNewStudent = (req, res, next) => {
 
 var enrolToClassByClassCode = (req, res, next) => {
   let id = req.body.classId
-  ClassService.enrolClassByClassCode(req.user, id)
+  ClassesService.enrolClassByClassCode(req.user, id)
     .then(result => {
       res.status(200).json(result)
     })
@@ -75,7 +75,7 @@ var enrolToClassByClassCode = (req, res, next) => {
 }
 
 var updateClassInfoById = (req, res, next) => {
-  ClassService.updateClassInfo(req.user, req.body)
+  ClassesService.updateClassInfo(req.user, req.body)
     .then(classInfo => {
       res.status(200).json(classInfo)
     })

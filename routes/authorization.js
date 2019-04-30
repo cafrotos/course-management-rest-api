@@ -1,5 +1,5 @@
-const 
-  UserService = require('services/UserService'),
+const
+  { UsersService } = require('services'),
   router = require('express').Router()
 
 router.post('/register', (req, res, next) => {

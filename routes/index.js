@@ -4,15 +4,13 @@ const
   { requireLogin, decentralization } = require('./middlware/authentication'),
   userRouter = require('./users'),
   postRouter = require('./posts'),
-  attachmentRouter = require('./attachments');
+  attachmentRouter = require('./attachments'),
+  modulesRouter = require('./modules');
 
 router.use('/users', requireLogin, userRouter())
 router.use('/attachments', attachmentRouter())
-router.get('/', requireLogin, decentralization(), (req, res, next) => {
-  res.json(req.user)
-})
-
 router.use('/classes', requireLogin, classesRouter());
-router.use('/posts', requireLogin, postRouter())
+router.use('/posts', requireLogin, postRouter());
+router.use('/modules', requireLogin, modulesRouter());
 
 module.exports = router;

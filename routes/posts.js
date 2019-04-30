@@ -1,6 +1,5 @@
 const
-  PostSevice = require('services/PostService'),
-  AttachmentsService = require('services/AttachmentsService'),
+  { AttachmentsService, PostsService } = require('services'),
   { decentralization, classPermistion } = require('./middlware/authentication'),
   router = require('express').Router()
 
@@ -16,7 +15,7 @@ var createNewPost = (req, res, next) => {
     postInfo: req.body,
     files: req.files
   }
-  PostSevice.createNewPost(req.user, req.classInfo, data)
+  PostsService.createNewPost(req.user, req.classInfo, data)
     .then(post => {
       res.json(post)
     })
@@ -26,7 +25,7 @@ var createNewPost = (req, res, next) => {
 };
 
 var getClassPosts = (req, res, next) => {
-  PostSevice.getClassPosts(req.classInfo)
+  PostsService.getClassPosts(req.classInfo)
     .then(posts => {
       res.status(200).json(posts);
     })

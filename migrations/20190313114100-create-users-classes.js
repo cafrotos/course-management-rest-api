@@ -12,7 +12,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       classId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       exercisesNumber: {
         type: Sequelize.SMALLINT

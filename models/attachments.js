@@ -9,6 +9,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {});
   attachments.associate = function (models) {
+    attachments.belongsTo(models.posts, { foreignKey: 'batchId', targetKey: 'attachmentBatchId', constraints: false })
+    attachments.belongsTo(models.exercises, { foreignKey: 'batchId', targetKey: 'attachmentBatchId', constraints: false })
   };
   return attachments;
 };

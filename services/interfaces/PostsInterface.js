@@ -45,10 +45,10 @@ class PostsInterface {
     return failures;
   }
 
-  addFailures(failures, { field, message }) {
+  static addFailures(failures, { field, message }) {
     if (!failures) failures = {};
-    if (!failures[field]) failures[field] = []
-    else failures[field].push(message);
+    if (!failures[field] || !Array.isArray(failures[field])) failures[field] = []
+    failures[field].push(message);
   }
 }
 

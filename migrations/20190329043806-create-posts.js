@@ -9,15 +9,15 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       classId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       postBy: {
         type: Sequelize.INTEGER
       },
-      content: {
+      attachmentId: {
         type: Sequelize.STRING
       },
-      attachmentId: {
+      content: {
         type: Sequelize.STRING
       },
       createdAt: {

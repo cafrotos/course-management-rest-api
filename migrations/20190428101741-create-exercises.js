@@ -1,33 +1,35 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('classes', {
+    return queryInterface.createTable('exercises', {
       id: {
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.STRING
-      },
-      className: {
-        type: Sequelize.STRING
-      },
-      lecturerId: {
         type: Sequelize.INTEGER
       },
-      studentNumber: {
-        type: Sequelize.INTEGER
-      },
-      description: {
+      classId: {
         type: Sequelize.STRING
       },
-      room: {
-        type: Sequelize.STRING
-      },
-      moduleId: {
+      postBy: {
         type: Sequelize.INTEGER
       },
-      roles: {
-        type: Sequelize.JSON,
-        allowNull: false
+      content: {
+        type: Sequelize.STRING
+      },
+      attachmentBatchId: {
+        type: Sequelize.STRING
+      },
+      point: {
+        type: Sequelize.SMALLINT
+      },
+      startedAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      exprisedAt: {
+        allowNull: false,
+        type: Sequelize.DATE
       },
       createdAt: {
         allowNull: false,
@@ -40,6 +42,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('classes');
+    return queryInterface.dropTable('exercises');
   }
 };

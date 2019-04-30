@@ -2,7 +2,7 @@ const
   router = require('express').Router(),
   createErrors = require('http-errors'),
   { decentralization } = require('./middlware/authentication'),
-  UserService = require('services/UserService');
+  { UsersService } = require('services');
 
 module.exports = () => {
   router.route('/info')
@@ -12,7 +12,7 @@ module.exports = () => {
 }
 
 var getUserInfo = (req, res, next) => {
-  UserService.getUserInfo(req.user)
+  UsersService.getUserInfo(req.user)
     .then(userInfo => {
       res.status(200).json(userInfo);
     })
@@ -23,7 +23,7 @@ var getUserInfo = (req, res, next) => {
 
 var patchUserInfo = (req, res, next) => {
   let dataUpdate = req.body;
-  UserService.updateUserInfo(req.user, dataUpdate)
+  UsersService.updateUserInfo(req.user, dataUpdate)
     .then(userInfo => {
       res.status(200).json(userInfo);
     })

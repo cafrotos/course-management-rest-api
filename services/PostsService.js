@@ -4,7 +4,7 @@ const
   BcryptHelper = require('libs/BcryptHelper'),
   AttachmentsService = require('./AttachmentsService'),
   PostsInterface = require('./interfaces/PostsInterface'),
-  { posts, sequelize } = require('../models');
+  { posts, sequelize } = require('models');
 
 const createNewPost = async (user, classInfo, { postInfo, files }) => {
   let transaction = await sequelize.transaction();
