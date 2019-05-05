@@ -1,21 +1,21 @@
 const
-  { exercises, sequelize } = require('models'),
+  { exercises, sequelize, attachments } = require('models'),
   createErrors = require('libs/CreateErrors'),
   ExerciseInterface = require('./interfaces/ExerciseInterface'),
   AttachmentsService = require('./AttachmentsService');
 
 async function createExercise(user, classInfo, exercise, files) {
   let transaction = await sequelize.transaction();
-  let exerciseParams = { user: user.dataValues, classInfo: classInfo.dataValues, files, exercise }
+  let exerciseParams = { user, classInfo: classInfo.dataValues, files, exercise }
   let exerciseInterface = new ExerciseInterface(exerciseParams);
   let exerciseEntity, results;
   try {
     exerciseEntity = exerciseInterface.getEntity();
     results = await Promise.all([
       exercises.create(exerciseEntity, { transaction }),
-      AttachmentsService.saveAttachment(files, exerciseEntity.attachmentBatchId, { transaction })
+      AttachmentsService.saveAttachment(files, exerciseEntity.attachmentBatchId, { transaction, hasAttachment: exerciseInterface.hasAttachment })
     ])
-    if (!result) throw createErrors(500, "Data error")
+    if (!results) throw createErrors(500, "Data error")
   } catch (error) {
     transaction.rollback();
     throw error;
@@ -27,10 +27,27 @@ async function createExercise(user, classInfo, exercise, files) {
   return response;
 }
 
-async function getExercises(user, classInfo, query) {
+async function getExercises(classInfo) {
+  return await exercises.findAll({
+    where: {
+      classId: classInfo.dataValues.id
+    }
+  })
+}
 
+async function getExercise(exerciseId) {
+  return await exercises.findOne({
+    where: {
+      id: exerciseId
+    },
+    include: [
+      {model: attachments, as: 'attachments'}
+    ]
+  })
 }
 
 module.exports = {
-  createExercise
+  createExercise,
+  getExercises,
+  getExercise
 }

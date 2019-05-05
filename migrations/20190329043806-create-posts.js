@@ -14,7 +14,7 @@ module.exports = {
       postBy: {
         type: Sequelize.INTEGER
       },
-      attachmentId: {
+      attachmentBatchId: {
         type: Sequelize.STRING
       },
       content: {

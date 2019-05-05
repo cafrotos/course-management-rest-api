@@ -31,8 +31,13 @@ const createNewPost = async (user, classInfo, { postInfo, files }) => {
   return postModel;
 }
 
-const getClassPosts = async () => {
-  let userPost = await posts.findAll();
+const getClassPosts = async (classInfo) => {
+  let query = {
+    where: {
+      classId: classInfo.dataValues.id
+    }
+  }
+  let userPost = await posts.findAll(query);
   if (!userPost) throw createErrors(404, "Not Found")
   return userPost;
 }

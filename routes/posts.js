@@ -4,7 +4,7 @@ const
   router = require('express').Router()
 
 module.exports = () => {
-  router.route('/')
+  router.route('/courses/:classId')
     .post(decentralization(), classPermistion, AttachmentsService.upload.array('files', 4), createNewPost)
     .get(decentralization(), classPermistion, getClassPosts)
   return router;

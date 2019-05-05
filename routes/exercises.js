@@ -6,18 +6,34 @@ const
   { AttachmentsService, ExercisesService } = require('services');
 
 module.exports = () => {
-  router.route('/')
-    .get(decentralization(), getExercises)
+  router.route('/courses/:classId')
+    .get(decentralization(), classPermistion, getExercises)
     .post(decentralization(SECTION.LECTURER_CODE), classPermistion, AttachmentsService.upload.array('files', 4), createExcercise)
-  // router.route('/:id')
-  //   .get(decentralization(), getExercise)
-  //   .patch(decentralization(SECTION.LECTURER_CODE), updateExcercise)
-  //   .post(decentralization(), submitExcercise)
+  router.route('/courses/:classId/:exerciseId')
+    .get(decentralization(), classPermistion, getExercise)
+    // .patch(decentralization(SECTION.LECTURER_CODE), updateExcercise)
+    .post(decentralization(), classPermistion, submitExcercise)
   return router;
 }
 
 var getExercises = (req, res, next) => {
+  ExercisesService.getExercises(req.classInfo)
+    .then(result => {
+      res.status(200).json(result);
+    })
+    .catch(err => {
+      next(err)
+    })
+}
 
+var getExercise = (req, res, next) => {
+  ExercisesService.getExercise(req.params.exerciseId)
+    .then(result => {
+      res.json(result);
+    })
+    .catch(err => {
+      next(err)
+    })
 }
 
 var createExcercise = (req, res, next) => {
@@ -28,4 +44,8 @@ var createExcercise = (req, res, next) => {
     .catch(err => {
       next(err);
     })
+}
+
+var submitExcercise = (req, res, next) => {
+
 }
