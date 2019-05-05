@@ -32,7 +32,7 @@ function decentralization(restriction_level) {
 }
 
 async function classPermistion(req, res, next) {
-  let classId = req.params.id;
+  let classId = req.params.classId || req.body.classId;
   let user = req.user;
   let classInfo
   switch (user.section) {

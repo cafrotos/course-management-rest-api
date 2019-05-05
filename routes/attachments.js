@@ -6,8 +6,10 @@ const
   CreateErrors = require('libs/CreateErrors');
 
 module.exports = () => {
-  router.route(classPermistion, '/download/:fileId')
-    .get(dowloadFile)
+  router.route('/upload')
+    .post(decentralization(), uploadFile)
+  router.route('/download/:fileId')
+    .get(classPermistion, dowloadFile)
   return router;
 }
 
@@ -18,6 +20,16 @@ var dowloadFile = (req, res, next) => {
         result.data.pipe(res);
       }
       else next(new CreateErrors(500, "SERVER INTERVAL"))
+    })
+    .catch(err => {
+      next(err);
+    })
+}
+
+var uploadFile = (req, res, next) => {
+  AttachmentsService.saveAttachment(req.files)
+    .then(result => {
+      res.status(200).json(result);
     })
     .catch(err => {
       next(err);

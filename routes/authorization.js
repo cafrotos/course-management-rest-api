@@ -3,7 +3,7 @@ const
   router = require('express').Router()
 
 router.post('/register', (req, res, next) => {
-  UserService.registerUser(req.body)
+  UsersService.registerUser(req.body)
     .then(user => {
       res.json(user.toJSON());
     })
@@ -13,11 +13,12 @@ router.post('/register', (req, res, next) => {
 });
 
 router.post('/login', (req, res, next) => {
-  UserService.loginUser(req.body)
+  UsersService.loginUser(req.body)
     .then(userInfo => {
       res.json(userInfo);
     })
     .catch(err => {
+      console.log(err)
       next(err);
     })
 });

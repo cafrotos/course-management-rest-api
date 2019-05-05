@@ -13,7 +13,7 @@ module.exports = () => {
   router.route('/enrol')
     .post(decentralization(), enrolToClassByClassCode)
 
-  router.route('/:id')
+  router.route('/:classId')
     .get(decentralization(), classPermistion, getClassInfoById)
     .post(decentralization(SECTION.LECTURER_CODE), classPermistion, addNewStudent)
     .patch(decentralization(SECTION.LECTURER_CODE), classPermistion, updateClassInfoById)
@@ -43,7 +43,7 @@ var createNewClass = (req, res, next) => {
 }
 
 var getClassInfoById = (req, res, next) => {
-  ClassesService.getClassInfoById(req.user, req.params.id)
+  ClassesService.getClassInfoById(req.user, req.params.classId)
     .then(classInfo => {
       res.status(200).json(classInfo)
     })
@@ -54,7 +54,7 @@ var getClassInfoById = (req, res, next) => {
 
 var addNewStudent = (req, res, next) => {
   let { emails } = req.body
-  ClassesService.addNewStudentToClassByEmails(req.user, req.params.id, emails)
+  ClassesService.addNewStudentToClassByEmails(req.user, req.params.classId, emails)
     .then(result => {
       res.status(200).json(result)
     })
