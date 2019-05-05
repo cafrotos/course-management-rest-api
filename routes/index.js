@@ -9,7 +9,7 @@ const
   exercisesRouter = require('./exercises');
 
 router.use('/users', requireLogin, userRouter())
-router.use('/attachments', attachmentRouter())
+router.use('/attachments', requireLogin, attachmentRouter())
 router.use('/classes', requireLogin, classesRouter());
 router.use('/posts', requireLogin, postRouter());
 router.use('/modules', requireLogin, modulesRouter());

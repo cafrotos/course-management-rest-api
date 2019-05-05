@@ -31,7 +31,10 @@ async function getExercises(classInfo) {
   return await exercises.findAll({
     where: {
       classId: classInfo.dataValues.id
-    }
+    },
+    include: [
+      {model: attachments, as: 'attachments'}
+    ]
   })
 }
 

@@ -4,7 +4,7 @@ const
   BcryptHelper = require('libs/BcryptHelper'),
   AttachmentsService = require('./AttachmentsService'),
   PostsInterface = require('./interfaces/PostsInterface'),
-  { posts, sequelize } = require('models');
+  { posts, sequelize, attachments } = require('models');
 
 const createNewPost = async (user, classInfo, { postInfo, files }) => {
   let transaction = await sequelize.transaction();
@@ -35,7 +35,10 @@ const getClassPosts = async (classInfo) => {
   let query = {
     where: {
       classId: classInfo.dataValues.id
-    }
+    },
+    include: [
+      {model: attachments, as: "attachments"}
+    ]
   }
   let userPost = await posts.findAll(query);
   if (!userPost) throw createErrors(404, "Not Found")

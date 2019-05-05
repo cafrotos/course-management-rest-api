@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     avatar: {
       type: DataTypes.TEXT,
       allowNull: false,
-      defaultValue: "https://uphinhnhanh.com/images/2018/12/09/10354686_10150004552801856_220367501106153455_n-1.jpg"
+      defaultValue: "https://courses-management-api.herokuapp.com/attachments/download/1K-XDe7DcynBBaKuaYssgNDKIEfQgvZvM"
     },
     address: DataTypes.STRING,
     section: DataTypes.STRING,
