@@ -5,6 +5,8 @@ const
   { UsersService } = require('services');
 
 module.exports = () => {
+  router.route('/logout')
+    .post(decentralization(), logout);
   router.route('/info')
     .get(decentralization(), getUserInfo)
     .patch(decentralization(), patchUserInfo)
@@ -31,3 +33,13 @@ var patchUserInfo = (req, res, next) => {
       next(err)
     })
 }
+
+const logout = (req, res, next) => {
+  UsersService.logout(req.user)
+    .then(result => {
+      res.status(200).json(result);
+    })
+    .catch(err => {
+      next(err)
+    })
+} 

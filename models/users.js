@@ -26,8 +26,8 @@ module.exports = (sequelize, DataTypes) => {
     users.hasMany(models.classes, { foreignKey: 'lecturerId' })
   };
   users.prototype.toJSON = function () {
-    let { id, email, firstName, lastName, avatar, address, section } = this.dataValues;
-    return { id, email, firstName, lastName, avatar, address, section }
+    let { id, email, firstName, lastName, avatar, address, section, isLogged, createdAt, updatedAt } = this.dataValues;
+    return { id, email, firstName, lastName, avatar, address, section, isLogged, createdAt, updatedAt }
   }
   users.prototype.comparePassword = function (password) {
     let result;

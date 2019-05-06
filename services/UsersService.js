@@ -15,12 +15,19 @@ const registerUser = async (userInfo) => {
 
 const loginUser = async ({ email, password }) => {
   let user, userInfo, access_token;
+  let date = new Date();
   user = await users.findOne({ where: { email } });
   if (!user || !user.comparePassword(password)) throw createErrors(400, "Email or password incorect");
   userInfo = user.toJSON();
-  access_token = JwtHelper.createAccessToken({ id: userInfo.id, email, section: userInfo.section })
+  if (userInfo.isLogged) throw createErrors(401, "Tài khoản đã đăng nhập ở máy tính khác");
+  await users.update({ isLogged: true, updatedAt: date }, { where: { email } })
+  access_token = JwtHelper.createAccessToken({ id: userInfo.id, email, section: userInfo.section, loggedAt: date })
   return { ...userInfo, access_token }
 }
+
+const logout = async (user) => {
+  return await await user.update({ isLogged: false })
+} 
 
 const getUserInfo = async (user) => {
   let userInfo = await users.findById(user.id);
@@ -29,8 +36,8 @@ const getUserInfo = async (user) => {
 }
 
 const updateUserInfo = async (user, dataUpdate) => {
-  let countUserEmail = user.findOne({where: {email: dataUpdate.email}})
-  if(countUserEmail) throw createErrors(400, "This email has been taken!")
+  let countUserEmail = user.findOne({ where: { email: dataUpdate.email } })
+  if (countUserEmail) throw createErrors(400, "This email has been taken!")
   let userInfo = {
     email: dataUpdate.email,
     firstName: dataUpdate.firstName,
@@ -38,13 +45,14 @@ const updateUserInfo = async (user, dataUpdate) => {
     avatar: dataUpdate.avatar,
     address: dataUpdate.address,
   }
-   
-  return await users.update( userInfo, { where: { id: user.id } })
+
+  return await users.update(userInfo, { where: { id: user.id } })
 }
 
 module.exports = {
   registerUser,
   loginUser,
   getUserInfo,
-  updateUserInfo
+  updateUserInfo,
+  logout
 }

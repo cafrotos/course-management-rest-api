@@ -15,7 +15,10 @@ module.exports = {
         avatar: "https://uphinhnhanh.com/images/2018/12/09/10354686_10150004552801856_220367501106153455_n-1.jpg",
         lastName: "Admin",
         address: "Skypia",
-        section: "ADMIN", createdAt: date, updatedAt: date
+        section: "ADMIN",
+        isLogged: false,
+        createdAt: date, 
+        updatedAt: date
       },
       {
         email: "lecturer@coursesmanagement.lecturer",
@@ -24,7 +27,10 @@ module.exports = {
         avatar: "https://uphinhnhanh.com/images/2018/12/09/10354686_10150004552801856_220367501106153455_n-1.jpg",
         lastName: "Lecturer",
         address: "Earth",
-        section: "LECTURER", createdAt: date, updatedAt: date
+        section: "LECTURER", 
+        isLogged: false,
+        createdAt: date, 
+        updatedAt: date
       },
       {
         email: "student@coursesmanagement.student",
@@ -33,7 +39,10 @@ module.exports = {
         avatar: "https://uphinhnhanh.com/images/2018/12/09/10354686_10150004552801856_220367501106153455_n-1.jpg",
         lastName: "Student",
         address: "Earth",
-        section: "STUdENT", createdAt: date, updatedAt: date
+        section: "STUdENT", 
+        isLogged: false,
+        createdAt: date, 
+        updatedAt: date
       }
     ], {});
   },

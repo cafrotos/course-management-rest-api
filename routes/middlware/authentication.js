@@ -1,20 +1,24 @@
 const
-  { classes, student_class } = require('models'),
+  { classes, student_class, users } = require('models'),
   JwtHelper = require('libs/JwtHelper'),
   createErrors = require('http-errors'),
   { SECTION } = require('../../constants');
 
-function requireLogin(req, res, next) {
+async function requireLogin(req, res, next) {
   const token = req.header('Authorization') || (req.query.token ? `Bearer ${req.query.token}` : null);
   if (token && token.split(' ')[0] === 'Bearer') {
-    JwtHelper.verifyAccessToken(token.split(' ')[1])
-      .then(decode => {
-        req.user = decode;
+    try {
+      let decode = await JwtHelper.verifyAccessToken(token.split(' ')[1])
+      let user = await users.findOne({ where: { id: decode.id, isLogged: true } })
+      if(user) {
+        if(new Date(decode.loggedAt).toString() !== new Date(user.dataValues.updatedAt).toString()) throw "error"
+        req.user = user;
         next();
-      })
-      .catch(err => {
-        next(createErrors(401, "Forbidden"))
-      })
+      }
+      else throw "Error";
+    } catch (err) {
+      next(createErrors(401, "Forbidden"))
+    }
   }
   else next(createErrors(401, "Forbidden"))
 }
