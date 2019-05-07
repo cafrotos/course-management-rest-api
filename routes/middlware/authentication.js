@@ -12,7 +12,7 @@ async function requireLogin(req, res, next) {
       let user = await users.findOne({ where: { id: decode.id, isLogged: true } })
       if(user) {
         if(new Date(decode.loggedAt).toString() !== new Date(user.dataValues.updatedAt).toString()) throw "error"
-        req.user = user;
+        req.user = decode;
         next();
       }
       else throw "Error";
