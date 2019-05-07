@@ -19,7 +19,9 @@ const loginUser = async ({ email, password }) => {
   user = await users.findOne({ where: { email } });
   if (!user || !user.comparePassword(password)) throw createErrors(400, "Email or password incorect");
   userInfo = user.toJSON();
-  if (userInfo.isLogged) throw createErrors(401, "Tài khoản đã đăng nhập ở máy tính khác");
+  let timeLogin = - new Date(user.updatedAt).getTime() + date.getTime();
+  let hourLogin = timeLogin / 3600000;
+  if (userInfo.isLogged && hourLogin < 3) throw createErrors(401, "Tài khoản đã đăng nhập ở máy tính khác");
   await users.update({ isLogged: true, updatedAt: date }, { where: { email } })
   access_token = JwtHelper.createAccessToken({ id: userInfo.id, email, section: userInfo.section, loggedAt: date })
   return { ...userInfo, access_token }
