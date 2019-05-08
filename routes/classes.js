@@ -54,7 +54,7 @@ var getClassInfoById = (req, res, next) => {
 
 var addNewStudent = (req, res, next) => {
   let { emails } = req.body
-  ClassesService.addNewStudentToClassByEmails(req.user, req.params.classId, emails)
+  ClassesService.addNewStudentToClassByEmails(req.user, req.classInfo, emails)
     .then(result => {
       res.status(200).json(result)
     })

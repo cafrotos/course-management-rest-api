@@ -22,8 +22,8 @@ module.exports = (sequelize, DataTypes) => {
   classes.associate = function (models) {
     classes.belongsTo(models.modules, { foreignKey: "moduleId" })
     classes.belongsTo(models.users, { foreignKey: 'lecturerId', as: 'lecturer' })
-    classes.belongsToMany(models.users, { through: "students_classes" })
-    classes.belongsToMany(models.users, { through: { model: models.posts, unique: false }, sourceKey: "id", targetKey: "classId" })
+    classes.hasMany(models.students_classes, { foreignKey: 'classId' })
+    classes.hasMany(models.posts, { foreignKey: "classId" })
   };
   return classes;
 };

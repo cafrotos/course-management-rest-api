@@ -10,9 +10,9 @@ module.exports = (sequelize, DataTypes) => {
     exprisedAt: DataTypes.DATE
   }, {});
   exercises.associate = function (models) {
-    exercises.belongsTo(models.classes, { foreignKey: 'classId' });
-    exercises.belongsTo(models.users, { foreignKey: 'postBy' });
     exercises.hasMany(models.attachments, { foreignKey: 'batchId', sourceKey: 'attachmentBatchId', constraints: false })
+    exercises.belongsTo(models.classes, { foreignKey: 'classId', as: 'class' })
+    exercises.belongsTo(models.users, { foreignKey: 'postBy', as: "userPost" })
   };
   return exercises;
 };

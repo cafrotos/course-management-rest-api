@@ -20,6 +20,7 @@ var createNewPost = (req, res, next) => {
       res.json(post)
     })
     .catch(err => {
+      console.log(err)
       next(err);
     })
 };

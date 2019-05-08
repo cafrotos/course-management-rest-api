@@ -30,11 +30,13 @@ async function getClassOfLecturer(lecturerId, query, option) {
 
 async function getClassOfStudent(studentId, query, option) {
   let queryFilterClasses = query ? query : {};
-  let queryFindStudentInfo = {
-    where: { id: studentId }
+  let queryFilterClasses = {
+    where: { userId: studentId },
+    include: [
+      {model: classes, as: 'classInfo'}
+    ]
   }
-  let user = await users.findOne(queryFindStudentInfo);
-  return await user.getClasses(queryFilterClasses);
+  return await students_classes.findAll(queryFilterClasses);
 }
 // end
 
@@ -64,14 +66,13 @@ async function getClassDetailInfo(user, classCode) {
  * @param {*} id 
  * @param {*} emails 
  */
-async function addNewStudentToClassByEmails(user, id, emails) {
-  if (!Array.isArray(emails)) throw CreateError(400, "Emails must be array!");
-  let result = await Promise.all([
-    classes.findOne({ where: { id, lecturerId: user.id } }),
-    users.findAll({ where: { email: { [Op.or]: emails } } })
-  ])
-  let classInfo = result[0];
-  let usersInfo = result[1];
+async function addNewStudentToClassByEmails(user, classInfo, email) {
+  students_classes.create({
+    classId: classInfo.dataValues.id,
+    userId: DataTypes.INTEGER,
+    exercisesNumber: DataTypes.SMALLINT,
+    gpa: DataTypes.DOUBLE
+  })
   if(!classInfo) throw CreateError(404, "Can't not found class!")
   return await classInfo.addUsers(usersInfo)
 }

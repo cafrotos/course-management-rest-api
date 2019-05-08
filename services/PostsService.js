@@ -4,7 +4,7 @@ const
   BcryptHelper = require('libs/BcryptHelper'),
   AttachmentsService = require('./AttachmentsService'),
   PostsInterface = require('./interfaces/PostsInterface'),
-  { posts, sequelize, attachments } = require('models');
+  { posts, sequelize, attachments, users } = require('models');
 
 const createNewPost = async (user, classInfo, { postInfo, files }) => {
   let transaction = await sequelize.transaction();
@@ -37,7 +37,8 @@ const getClassPosts = async (classInfo) => {
       classId: classInfo.dataValues.id
     },
     include: [
-      {model: attachments, as: "attachments"}
+      {model: attachments, as: "attachments"},
+      {model: users, as: "userPosted"}
     ]
   }
   let userPost = await posts.findAll(query);

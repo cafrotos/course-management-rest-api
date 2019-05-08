@@ -54,7 +54,7 @@ class ExerciseInterface {
     return failures;
   }
 
-  static addFailures(failures, { field, message }) {
+  addFailures(failures, { field, message }) {
     if (!failures) failures = {};
     if (!failures[field] || !Array.isArray(failures[field])) failures[field] = []
     failures[field].push(message);
