@@ -11,7 +11,6 @@ module.exports = () => {
     .post(decentralization(SECTION.LECTURER_CODE), classPermistion, AttachmentsService.upload.array('files', 4), createExcercise)
   router.route('/courses/:classId/:exerciseId')
     .get(decentralization(), classPermistion, getExercise)
-    // .patch(decentralization(SECTION.LECTURER_CODE), updateExcercise)
     .post(decentralization(), classPermistion, submitExcercise)
   return router;
 }

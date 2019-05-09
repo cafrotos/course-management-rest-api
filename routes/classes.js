@@ -43,13 +43,8 @@ var createNewClass = (req, res, next) => {
 }
 
 var getClassInfoById = (req, res, next) => {
-  ClassesService.getClassInfoById(req.user, req.params.classId)
-    .then(classInfo => {
-      res.status(200).json(classInfo)
-    })
-    .catch(err => {
-      next(err);
-    })
+  let classInfo = req.classInfo;
+  res.status(200).json(classInfo)
 }
 
 var addNewStudent = (req, res, next) => {

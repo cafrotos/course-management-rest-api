@@ -7,7 +7,9 @@ const
   attachmentRouter = require('./attachments'),
   modulesRouter = require('./modules'),
   exercisesRouter = require('./exercises');
-
+router.post('/success', (req, res, next) => {
+  res.status(200).send("oke")
+})
 router.use('/users', requireLogin, userRouter())
 router.use('/attachments', requireLogin, attachmentRouter())
 router.use('/classes', requireLogin, classesRouter());

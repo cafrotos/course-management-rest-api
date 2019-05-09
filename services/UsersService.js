@@ -28,7 +28,7 @@ const loginUser = async ({ email, password }) => {
 }
 
 const logout = async (user) => {
-  return await await user.update({ isLogged: false })
+  return await await users.update({ isLogged: false }, {where: {id: user.id}})
 } 
 
 const getUserInfo = async (user) => {

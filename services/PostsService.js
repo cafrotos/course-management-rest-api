@@ -39,6 +39,9 @@ const getClassPosts = async (classInfo) => {
     include: [
       {model: attachments, as: "attachments"},
       {model: users, as: "userPosted"}
+    ],
+    order: [
+      ['createdAt', 'DESC']
     ]
   }
   let userPost = await posts.findAll(query);
