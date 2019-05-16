@@ -1,8 +1,9 @@
 let { expect } = require('chai')
-let request = require('request')
 let config = require('../config/setting.json')
 let { users } = require('models')
+const app = require('../app')
 const BcryptHelper = require('libs/BcryptHelper');
+const request = require('supertest')
 
 describe('Test đăng nhập', () => {
   before(async () => {
@@ -18,56 +19,38 @@ describe('Test đăng nhập', () => {
       section: "STUDENT",
     })
   })
-  it("Đăng nhập thành công khi đúng tài khoản, mật khẩu", () => {
+  it("Đăng nhập thành công khi đúng tài khoản, mật khẩu", async () => {
     let body = {
       email: "student@coursesmanagement.student",
       password: "123456"
     };
-    request({
-      uri: `${config.rootapitest}/login`,
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: body,
-      json: true
-    }, (err, res, body) => {
-      expect(res.statusCode).to.equal(200);
-    })
+    await request(app)
+      .post('/login')
+      .send(body)
+      .set('Accept', 'application/json')
+      .expect(200)
   })
   it("Đăng nhập thất bại khi đúng tài khoản, sai mật khẩu", () => {
     let body = {
       email: "student@coursesmanagement.student",
       password: "1234546"
     };
-    request({
-      uri: `${config.rootapitest}/login`,
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: body,
-      json: true
-    }, (err, res, body) => {
-      expect(res.statusCode).to.equal(400);
-    })
+    await request(app)
+      .post('/login')
+      .send(body)
+      .set('Accept', 'application/json')
+      .expect(400)
   })
   it("Đăng nhập thất bại khi sai tài khoản", () => {
     let body = {
       email: "student@gmail.student",
       password: "123456"
     };
-    request({
-      uri: `${config.rootapitest}/login`,
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: body,
-      json: true
-    }, (err, res, body) => {
-      expect(res.statusCode).to.equal(400);
-    })
+    await request(app)
+      .post('/login')
+      .send(body)
+      .set('Accept', 'application/json')
+      .expect(400)
   })
 
   after( async () => {
