@@ -6,7 +6,8 @@
     "start-server": "./node_modules/.bin/nodemon ./bin/www",
     "migrate": "./node_modules/.bin/sequelize db:migrate",
     "seed": "./node_modules/.bin/sequelize db:seed:all",
-    "start": "npm run migrate && npm run start-server"
+    "start": "npm run migrate && npm run start-server",
+    "test": "./node_modules/.bin/mocha ./test/* --timeout 30000"
   },
   "dependencies": {
     "bcrypt": "^3.0.4",
