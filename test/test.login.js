@@ -30,7 +30,7 @@ describe('Test đăng nhập', () => {
       .set('Accept', 'application/json')
       .expect(200)
   })
-  it("Đăng nhập thất bại khi đúng tài khoản, sai mật khẩu", () => {
+  it("Đăng nhập thất bại khi đúng tài khoản, sai mật khẩu", async () => {
     let body = {
       email: "student@coursesmanagement.student",
       password: "1234546"
@@ -41,7 +41,7 @@ describe('Test đăng nhập', () => {
       .set('Accept', 'application/json')
       .expect(400)
   })
-  it("Đăng nhập thất bại khi sai tài khoản", () => {
+  it("Đăng nhập thất bại khi sai tài khoản", async () => {
     let body = {
       email: "student@gmail.student",
       password: "123456"
