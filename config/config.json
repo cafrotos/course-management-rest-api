@@ -13,6 +13,13 @@
     "host": "courses-management",
     "dialect": "postgres"
   },
+  "test": {
+    "username": "postgres",
+    "password": "postgres",
+    "database": "database_test",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
   "production": {
     "use_env_variable": "DATABASE_URL"
   }
