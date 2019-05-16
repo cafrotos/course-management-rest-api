@@ -1,6 +1,6 @@
 let { expect } = require('chai')
 let config = require('../config/setting.json')
-let { users } = require('models')
+let { users, sequelize } = require('models')
 const app = require('../app')
 const BcryptHelper = require('libs/BcryptHelper');
 const request = require('supertest')
@@ -59,5 +59,6 @@ describe('Test đăng nhập', () => {
         email: "student@coursesmanagement.student",
       }
     })
+    sequelize.close();
   })
 })
